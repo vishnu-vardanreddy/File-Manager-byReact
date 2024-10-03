@@ -13,14 +13,8 @@
 // });
 
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc'; // Change to this if you installed it
 
 export default defineConfig({
   plugins: [react()],
-  build: {
-    sourcemap: true, // Enable source maps for production build
-  },
-  server: {
-    sourcemap: 'inline' // Use inline source maps for development server
-  }
 });
