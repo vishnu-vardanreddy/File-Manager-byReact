@@ -2,6 +2,7 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
+import HomePage from './Pages/HomePage/HomePage'
 
 const App = () => {
  
@@ -9,7 +10,7 @@ const App = () => {
 
      <>
      <div className="App">
-      <h1>Hello</h1>
+      <HomePage/>
      </div>
       
     </>
