@@ -6,6 +6,7 @@ const initialState = {
     user:{},
 };
 const authReducer = (state = initialState, action) => {
+    console.log("Reducer received action:", action);
     switch (action.type)
     {
        case types.SIGN_IN:
@@ -20,6 +21,20 @@ const authReducer = (state = initialState, action) => {
                 isAunthenticated:false,
                 user:{},
             };
+        
+            case types.AUTH_START:
+                return {
+                    ...state,
+                    loading: true,
+                    error: null
+                };
+            case types.AUTH_ERROR:
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.payload
+                };
+            
         default:
             return state;
     }

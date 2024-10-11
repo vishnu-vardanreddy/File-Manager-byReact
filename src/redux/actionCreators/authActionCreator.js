@@ -1,34 +1,82 @@
-
 import fire from "../../reducers/config/firebase"
 import * as types from "../actionTypes/authActionTypes"
 
-const loginUser = (payload) =>
-{
-    return {
-        type :  types.LOGIN_USER,
-        payload
-    };
-}
-const logoutUser = ()=>
-{
-    return{
-        type : types.SIGN_OUT_USER,
+const loginUser = (payload) => ({
+    type: types.SIGN_IN,
+    payload
+});
 
-    }
-}
-export const signInUser = (email,password) => (dispatch) =>
-{
-    //console.log(email,password);
-    fire.auth().signInWithEmailAndPassword(email,password).then(user=>{
-        console.log(user);
-    }).catch(error=>{
-        alert("Invalid email or Password");
-    })
-};
-export const signUpUser = (name,email,password)=>(dispatch)=>{
-    console.log(name,email,password);
-};
-export const SignOutUser = ()=>(dispatch)=>{
-    dispatch(logoutUser());
+const logoutUser = () => ({
+    type: types.SIGN_OUT
+});
+
+const authStart = () => ({
+    type: types.AUTH_START
+});
+
+const authError = (error) => ({
+    type: types.AUTH_ERROR,
+    payload: error
+});
+
+export const signInUser = (email, password) => (dispatch) => {
+    dispatch(authStart());
+    return fire.auth().signInWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            const user = userCredential.user;
+            dispatch(loginUser({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName
+            }));
+            //setSuccess(true);
+            console.log("Login success");
+            return { success: true, user };
+        })
+        .catch(error => {
+            const errorMessage = error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' 
+                ? "Invalid email or password"
+                : error.message;
+            dispatch(authError(errorMessage));
+            console.log("Login failed");
+            return { success: false, error: errorMessage };
+        });
 };
 
+export const signUpUser = (name, email, password, setSuccess) => (dispatch) => {
+    dispatch(authStart());
+    return fire.auth().createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            return userCredential.user.updateProfile({
+                displayName: name
+            });
+        })
+        .then(() => {
+            const user = fire.auth().currentUser;
+            dispatch(loginUser({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName
+            }));
+            setSuccess(true);
+            return { success: true, user };
+        })
+        .catch(error => {
+            dispatch(authError(error.message));
+            
+            return { success: false, error: error.message };
+        });
+};
+
+export const signOutUser = () => (dispatch) => {
+    dispatch(authStart());
+    return fire.auth().signOut()
+        .then(() => {
+            dispatch(logoutUser());
+            return { success: true };
+        })
+        .catch(error => {
+            dispatch(authError(error.message));
+            return { success: false, error: error.message };
+        });
+};
