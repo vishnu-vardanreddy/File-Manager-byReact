@@ -1,11 +1,16 @@
+import {useEffect } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-// import  HomePage  from './Pages/HomePage/HomePage';
-// import Login from './Pages/AuthPages/Login/Login';
-// import Register from './Pages/AuthPages/Register/Register';
-// import DashboardPage from './Pages/DashboardPage/DashboardPage';
+import { useDispatch } from 'react-redux';
 import { Login ,HomePage ,Register, DashboardPage} from './Pages';
+import { checkIsLoggedIn } from './redux/actionCreators/authActionCreator';
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(checkIsLoggedIn());
+  },[]);
   return (
   // <BrowserRouter>
     <div className="App">
