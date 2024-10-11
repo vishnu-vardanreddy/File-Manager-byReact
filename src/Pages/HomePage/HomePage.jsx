@@ -1,7 +1,7 @@
 import React from 'react'
 import  {NavigationComponent} from '../../Components/HomePageComponents';
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <>
       <NavigationComponent/>
