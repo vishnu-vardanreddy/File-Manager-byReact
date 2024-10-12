@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../Components/DashboardComponents/Navbar/Navbar';
 import SubBar from '../../Components/DashboardComponents/SubBar/SubBar';
+import HomeComponent from "../../Components/DashboardComponents/HomeComponent/HomeComponent"
 const DashboardPage = () => {
   const isLoggedIn = useSelector(state => state.auth.isAuthenticated);
   const navigate = useNavigate();
@@ -17,8 +18,9 @@ const DashboardPage = () => {
     <>
       <Navbar/>
       <SubBar/>
-
+      <HomeComponent/>
+      
     </>
-  )
+  );
 };
 export default DashboardPage;
