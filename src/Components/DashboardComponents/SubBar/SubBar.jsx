@@ -14,14 +14,14 @@ const SubBar = () => {
 
                 <li className="nav-item mx-2">
                     <button className="btn btn-outline-dark">
-                    <i class="fa-solid fa-file-lines"style={{ marginRight: '8px' }}></i>
+                    <i className="fa-solid fa-file-lines"style={{ marginRight: '8px' }}></i>
                         Create File
                     </button>
                 </li>
 
                 <li className="nav-item mx-2">
                     <button className="btn btn-outline-dark">
-                        <i class="fa-solid fa-folder-plus" style={{ marginRight: '8px' }}></i>
+                        <i className="fa-solid fa-folder-plus" style={{ marginRight: '8px' }}></i>
                         Create Folder
                     </button>
                 </li>
